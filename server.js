@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static("."));
 
-const PORT = 3000;
+const PORT=process.env.PORT || 3000;
 
 const ASAAS_API_KEY = process.env.ASAAS_API_KEY;
 

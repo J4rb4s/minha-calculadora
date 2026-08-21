@@ -4,7 +4,28 @@ const express = require("express");
 
 const app = express();
 
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
+
 app.use(express.json());
+
+app.get("/calculadora.html", (req, res) => {
+
+    if (req.cookies.acessoCalculadora === "liberado") {
+
+        return res.sendFile(
+            __dirname + "/calculadora.html"
+        );
+
+    }
+
+    res.status(403).send(
+        "Acesso não autorizado. Realize o pagamento."
+    );
+
+});
+
 app.use(express.static("."));
 
 const PORT=process.env.PORT || 3000;
@@ -165,15 +186,31 @@ app.get("/verificar-pagamento/:id", async (req, res) => {
          */
 
         const pago =
-            pagamento.status === "PAYMENT_RECEIVED" ||
-            pagamento.status === "RECEIVED";
+	     pagamento.status === "PAYMENT_RECEIVED" ||
+             pagamento.status === "RECEIVED";
 
-        res.json({
-            pago: pago,
-            status: pagamento.status
-        });
 
-    } catch (erro) {
+	if (pago) {
+
+    	   res.cookie(
+             "acessoCalculadora",
+             "liberado",
+              {
+                 httpOnly: true,
+                 secure: false,
+                 maxAge: 24 * 60 * 60 * 1000
+           }
+         );
+
+}
+
+
+	res.json({
+   	   pago: pago,
+   	   status: pagamento.status
+	 });
+   
+ } catch (erro) {
 
         console.error(
             "Erro ao verificar pagamento:",

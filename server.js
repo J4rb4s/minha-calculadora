@@ -44,7 +44,7 @@ app.post("/criar-pagamento", async (req, res) => {
         console.log("1 - Iniciando criação do pagamento...");
 
         const resposta = await fetch(
-            "https://api-sandbox.asaas.com/v3/customers",
+            "https://api.asaas.com/v3/customers",
             {
                 method: "POST",
                 headers: {
@@ -71,7 +71,7 @@ app.post("/criar-pagamento", async (req, res) => {
         }
 
         const pagamentoResposta = await fetch(
-            "https://api-sandbox.asaas.com/v3/payments",
+            "https://api.asaas.com/v3/payments",
             {
                 method: "POST",
                 headers: {
@@ -103,7 +103,7 @@ app.post("/criar-pagamento", async (req, res) => {
         }
 
         const qrResposta = await fetch(
-            `https://api-sandbox.asaas.com/v3/payments/${pagamento.id}/pixQrCode`,
+            `https://api.asaas.com/v3/payments/${pagamento.id}/pixQrCode`,
             {
                 method: "GET",
                 headers: {
@@ -154,7 +154,7 @@ app.get("/verificar-pagamento/:id", async (req, res) => {
         const pagamentoId = req.params.id;
 
         const resposta = await fetch(
-            `https://api-sandbox.asaas.com/v3/payments/${pagamentoId}`,
+            `https://api.asaas.com/v3/payments/${pagamentoId}`,
             {
                 method: "GET",
 

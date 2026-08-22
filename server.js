@@ -81,7 +81,7 @@ app.post("/criar-pagamento", async (req, res) => {
                 body: JSON.stringify({
                     customer: cliente.id,
                     billingType: "PIX",
-                    value: 1.30,
+                    value: 5.00,
                     dueDate: new Date()
                         .toISOString()
                         .split("T")[0],
